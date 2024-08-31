@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "name": "Python3: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/social_network/manage.py",
+            "args": [
+                "runserver",
+                "--noreload"
+            ],
+            "django": true,
+            "python": "/home/kiran/Projects/social_network/venv/bin/python3"
+        },
+        {
+            "name": "Python: Shell",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/social_network/manage.py",
+            "args": [
+                "shell_plus",
+            ],
+            "django": true,
+            "python": "/home/kiran/Projects/social_network/venv/bin/python3"
+            
+        }
+    ]
+}
