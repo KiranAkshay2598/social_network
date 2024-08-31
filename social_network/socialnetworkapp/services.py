@@ -46,7 +46,7 @@ def authenticate_user(request):
         email = request.data.get('email')
         password = request.data.get('password')
         user = authenticate(request, username=email, password=password)
-        if user is not None:
+        if not user:
             token, created = Token.objects.get_or_create(user=user)
             return_data = {
                 "token": token.key,
