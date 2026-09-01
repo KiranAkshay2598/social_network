@@ -303,7 +303,7 @@
 	"variable": [
 		{
 			"key": "key",
-			"value": "token 021bc4aabaee31cf8350171ff156053c042f2bd7",
+			"value": "Token {{token}}",
 			"type": "default"
 		}
 	]

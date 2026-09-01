@@ -27,7 +27,7 @@ def create_user(data):
             }
             status = 'failure'
         else:
-            user = User.objects.create_user(username=email, password=password, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(username=email, email=email, password=password, first_name=first_name, last_name=last_name)
             serializer = UserSerializer(user)
             return_data = {
                 "user": serializer.data
@@ -46,7 +46,7 @@ def authenticate_user(request):
         email = request.data.get('email')
         password = request.data.get('password')
         user = authenticate(request, username=email, password=password)
-        if not user:
+        if user:
             token, created = Token.objects.get_or_create(user=user)
             return_data = {
                 "token": token.key,
@@ -133,7 +133,7 @@ def create_friend_request(request):
             to_user = User.objects.filter(id=to_user_id).first()
             if not to_user:
                 return_data = {
-                    "error": "To User not foundd.",
+                    "error": "To User not found.",
                 }
                 status = 'failure'
                 status_code = 404
@@ -195,6 +195,6 @@ def update_friend_request(friend_request_id, request):
         return_data = {
             "error": "Invalid action.",
         }
-        status = 'success'
+        status = 'failure'
         status_code = 400
     return build_response(status=status, data=return_data), status_code
