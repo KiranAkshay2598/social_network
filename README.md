@@ -1,6 +1,6 @@
 # Social Network API
 
-A clean Django REST Framework backend application designed for user authentication, friend request management with rate-limiting (max 3 requests/min), bidirectional friend lists, and paginated user searching. Built for an interview round for a company in 2024, demonstrating robust DRF backend architecture, containerized Docker deployment, and clean software design principles.
+A high-performance social networking REST API built with Django REST Framework, featuring secure user authentication, paginated user search, automated friend request workflows with custom rate-limiting (max 3 requests/min), and bidirectional friendship management. Built for a technical interview round for a company in 2024, showcasing robust service-layer architecture and containerized Docker deployment.
 
 ---
 
