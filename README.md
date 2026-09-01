@@ -1,6 +1,6 @@
 # Social Network API
 
-A social networking REST API built with Django REST Framework, featuring user authentication, paginated user search, friend request workflows with custom rate-limiting (max 3 requests/min), and bidirectional friendship management. Built for a technical interview round for a company in 2024, demonstrating service-layer architecture and containerized Docker deployment.
+A social networking REST API built with Django REST Framework, featuring user authentication, paginated user search, friend request workflows with custom rate-limiting (max 3 requests/min), and bidirectional friendship management. Built for a technical interview round for a company in 2024, demonstrating service-layer architecture and fully containerized with Docker and Docker Compose for easy setup and deployment.
 
 ---
 
