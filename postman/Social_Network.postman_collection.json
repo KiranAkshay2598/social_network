@@ -76,7 +76,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/v1/login",
+					"raw": "http://127.0.0.1:8000/api/v1/login/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -88,7 +88,8 @@
 					"path": [
 						"api",
 						"v1",
-						"login"
+						"login",
+						""
 					]
 				}
 			},
