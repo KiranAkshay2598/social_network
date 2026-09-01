@@ -56,7 +56,7 @@ social_network/
 ### Prerequisites
 * Python 3.11+
 * Git
-* Docker & Docker Compose (Optional)
+* Docker & Docker Compose
 
 ### Local Setup
 
@@ -94,7 +94,7 @@ The API will be available at `http://127.0.0.1:8000/`.
 ### Running with Docker
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ---
