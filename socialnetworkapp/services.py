@@ -68,7 +68,7 @@ def authenticate_user(request):
 
 def search_user(request):
     try:
-        keyword = request.GET.get('search', '')
+        keyword = request.GET.get('search', '').strip()
         if not keyword:
             return_data = {
                 "error": "Search keyword is required.",
@@ -93,9 +93,9 @@ def search_user(request):
                     status_code = 404
             else:
                 users = User.objects.filter(Q(first_name__icontains=keyword) | Q(last_name__icontains=keyword))
-                if not users:
+                if not users.exists():
                     return_data = {
-                        "error": "No user's found",
+                        "error": "No users found",
                     }
                     status = 'failure'
                     status_code = 404
@@ -107,7 +107,8 @@ def search_user(request):
                     paginated_users = users[start:end]
                     serializer = UserSerializer(paginated_users, many=True)
                     return_data = {
-                        "user": serializer.data,
+                        "users": serializer.data,
+                        "total_count": users.count()
                     }
                     status = 'success'
                     status_code = 200
@@ -133,12 +134,27 @@ def create_friend_request(request):
             to_user = User.objects.filter(id=to_user_id).first()
             if not to_user:
                 return_data = {
-                    "error": "To User not found.",
+                    "error": "Target User not found.",
                 }
                 status = 'failure'
                 status_code = 404
+            elif from_user == to_user:
+                return_data = {
+                    "error": "You cannot send a friend request to yourself.",
+                }
+                status = 'failure'
+                status_code = 400
             else:
-                if FriendRequest.objects.filter(from_user=from_user, to_user=to_user, status='pending').exists():
+                if FriendRequest.objects.filter(
+                    (Q(from_user=from_user, to_user=to_user) | Q(from_user=to_user, to_user=from_user)),
+                    status='accepted'
+                ).exists():
+                    return_data = {
+                        "error": "You are already friends with this user.",
+                    }
+                    status = 'failure'
+                    status_code = 400
+                elif FriendRequest.objects.filter(from_user=from_user, to_user=to_user, status='pending').exists():
                     return_data = {
                         "error": "Friend request already sent.",
                     }
@@ -172,6 +188,9 @@ def update_friend_request(friend_request_id, request):
     except FriendRequest.DoesNotExist:
         return build_response(status='failure', data={"error": "Friend request not found."}), 404
 
+    if friend_request.to_user != request.user:
+        return build_response(status='failure', data={"error": "You are not authorized to respond to this friend request."}), 403
+
     action = request.data.get('action')
     if action == 'accept':
         friend_request.status = 'accepted'
@@ -193,7 +212,7 @@ def update_friend_request(friend_request_id, request):
         status_code = 200
     else:
         return_data = {
-            "error": "Invalid action.",
+            "error": "Invalid action. Must be 'accept' or 'reject'.",
         }
         status = 'failure'
         status_code = 400
