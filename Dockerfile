@@ -1,8 +1,14 @@
-FROM python:3.8
+FROM python:3.11-slim
+
 ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
-ADD requirements.txt /app/
-RUN pip install -r requirements.txt
-ADD . /app/
+
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /app/
+
 EXPOSE 8000
+
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "social_network.wsgi:application"]
